@@ -9,25 +9,57 @@ import java.util.List;
 @Service
 public class ExpenseService {
 
+    /**
+     * The repository for managing expenses.
+     */
     private final ExpenseRepository expenseRepo;
 
-    public ExpenseService(ExpenseRepository expenseRepo) {
+    /**
+     * Constructor for ExpenseService.
+     *
+     * @param expenseRepo the expense repository
+     */
+    public ExpenseService(final ExpenseRepository expenseRepo) {
         this.expenseRepo = expenseRepo;
     }
 
+    /**
+     * Retrieves all expenses.
+     *
+     * @return a list of all expenses
+     */
     public List<Expense> getAllExpenses() {
         return expenseRepo.findAll();
     }
 
-    public Expense getExpenseById(Long id) {
+    /**
+     * Retrieves an expense by ID.
+     *
+     * @param id the ID of the expense
+     * @return the expense object, or null if not found
+     */
+    public Expense getExpenseById(final Long id) {
         return expenseRepo.findById(id).orElse(null);
     }
 
-    public Expense createExpense(Expense expense) {
+    /**
+     * Creates a new expense.
+     *
+     * @param expense the expense object to create
+     * @return the created expense object
+     */
+    public Expense createExpense(final Expense expense) {
         return expenseRepo.save(expense);
     }
 
-    public Expense updateExpense(Long id, Expense updatedExpense) {
+    /**
+     * Updates an existing expense.
+     *
+     * @param id the ID of the expense to update
+     * @param updatedExpense the updated expense object
+     * @return the updated expense object, or null if not found
+     */
+    public Expense updateExpense(final Long id, final Expense updatedExpense) {
         Expense expense = expenseRepo.findById(id).orElse(null);
         if (expense != null) {
             expense.setAmount(updatedExpense.getAmount());
@@ -40,7 +72,12 @@ public class ExpenseService {
         return null;
     }
 
-    public void deleteExpense(Long id) {
+    /**
+     * Deletes an expense by ID.
+     *
+     * @param id the ID of the expense to delete
+     */
+    public void deleteExpense(final Long id) {
         expenseRepo.deleteById(id);
     }
 }
