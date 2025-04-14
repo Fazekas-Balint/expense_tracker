@@ -9,25 +9,58 @@ import java.util.List;
 @Service
 public class CategoryService {
 
+    /**
+     * The repository for managing categories.
+     */
     private final CategoryRepository categoryRepo;
 
-    public CategoryService(CategoryRepository categoryRepo) {
+    /**
+     * Constructor for CategoryService.
+     *
+     * @param categoryRepo the category repository
+     */
+    public CategoryService(final CategoryRepository categoryRepo) {
         this.categoryRepo = categoryRepo;
     }
 
+    /**
+     * Retrieves all categories.
+     *
+     * @return a list of all categories
+     */
     public List<Category> getAllCategories() {
         return categoryRepo.findAll();
     }
 
-    public Category getCategoryById(Long id) {
+    /**
+     * Retrieves a category by ID.
+     *
+     * @param id the ID of the category
+     * @return the category object, or null if not found
+     */
+    public Category getCategoryById(final Long id) {
         return categoryRepo.findById(id).orElse(null);
     }
 
-    public Category createCategory(Category category) {
+    /**
+     * Creates a new category.
+     *
+     * @param category the category object to create
+     * @return the created category object
+     */
+    public Category createCategory(final Category category) {
         return categoryRepo.save(category);
     }
 
-    public Category updateCategory(Long id, Category updatedCategory) {
+    /**
+     * Updates an existing category.
+     *
+     * @param id the ID of the category to update
+     * @param updatedCategory the updated category object
+     * @return the updated category object, or null if not found
+     */
+    public Category updateCategory(final Long id,
+                                   final Category updatedCategory) {
         Category category = categoryRepo.findById(id).orElse(null);
         if (category != null) {
             category.setName(updatedCategory.getName());
@@ -36,7 +69,12 @@ public class CategoryService {
         return null;
     }
 
-    public void deleteCategory(Long id) {
+    /**
+     * Deletes a category by ID.
+     *
+     * @param id the ID of the category to delete
+     */
+    public void deleteCategory(final Long id) {
         categoryRepo.deleteById(id);
     }
 }
