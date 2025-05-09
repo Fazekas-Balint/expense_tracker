@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Új kiadás</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4"
+              th:text="${expense.id} != null ? 'Kiadás szerkesztése' : 'Új kiadás hozzáadása'">
+            Új kiadás hozzáadása
+          </h2>
+
+          <form th:action="@{/expenses}" th:object="${expense}" method="post">
+
+            <!-- Rejtett ID mező frissítéshez -->
+            <input type="hidden" th:if="${expense.id != null}" th:field="*{id}" />
+
+            <div class="mb-3">
+              <label class="form-label">Leírás</label>
+              <input type="text" th:field="*{description}" class="form-control" placeholder="Pl. Tankolás" required/>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Összeg</label>
+              <input type="number" step="0.01" th:field="*{amount}" class="form-control" placeholder="Pl. 1500.00" required/>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Dátum</label>
+              <input type="date" th:field="*{date}" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Kategória</label>
+              <select name="categoryId" class="form-select">
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}"
+                        th:selected="${expense.category != null and cat.id == expense.category.id}">
+                </option>
+              </select>
+            </div>
+
+<!--            <div class="mb-3">-->
+<!--              <label class="form-label">Felhasználó</label>-->
+<!--              <select name="userId" class="form-select">-->
+<!--                <option th:each="user : ${users}"-->
+<!--                        th:value="${user.id}"-->
+<!--                        th:text="${user.name}"-->
+<!--                        th:selected="${expense.user != null and user.id == expense.user.id}">-->
+<!--                </option>-->
+<!--              </select>-->
+<!--            </div>-->
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Mentés</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
