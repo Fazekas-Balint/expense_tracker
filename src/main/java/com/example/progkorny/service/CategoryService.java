@@ -77,4 +77,14 @@ public class CategoryService {
     public void deleteCategory(final Long id) {
         categoryRepo.deleteById(id);
     }
+
+    /**
+     * Finds a category by name.
+     *
+     * @param name the name of the category
+     * @return the category object, or null if not found
+     */
+    public Category findByName(final String name) {
+        return categoryRepo.findByName(name).orElse(null);
+    }
 }

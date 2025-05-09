@@ -78,4 +78,15 @@ public class UserService {
     public void deleteUser(final Long id) {
         userRepo.deleteById(id);
     }
+
+    /**
+     * Retrieves a user by name.
+     *
+     * @param name the name of the user
+     * @return the user object, or null if not found
+     */
+    public User getUserByName(final String name) {
+        return userRepo.findByName(name);
+    }
+
 }
