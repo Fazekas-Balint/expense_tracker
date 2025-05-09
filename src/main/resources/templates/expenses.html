@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kiadások listája</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+
+<h1 class="mb-4">Kiadások listája</h1>
+
+<a href="/expenses/new" class="btn btn-primary mb-3">Új kiadás hozzáadása</a>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Leírás</th>
+        <th>Összeg (Ft)</th>
+        <th>Dátum</th>
+        <th>Kategória</th>
+        <th>Felhasználó</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="expense : ${expenses}">
+        <td th:text="${expense.description}">Leírás</td>
+        <td th:text="${expense.amount}">Összeg</td>
+        <td th:text="${expense.date}">Dátum</td>
+        <td th:text="${expense.category != null ? expense.category.name : 'Nincs kategória'}">Kategória</td>
+        <td th:text="${expense.user != null ? expense.user.name : 'Nincs felhasználó'}">Felhasználó</td>
+        <td>
+            <a th:href="@{'/expenses/edit/' + ${expense.id}}">✏️</a>
+            <a th:href="@{'/expenses/delete/' + ${expense.id}}"
+               onclick="return confirm('Biztosan törlöd?');">🗑️</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

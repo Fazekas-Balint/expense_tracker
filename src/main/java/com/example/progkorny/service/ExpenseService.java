@@ -1,10 +1,11 @@
 package com.example.progkorny.service;
 
 import com.example.progkorny.model.Expense;
+import com.example.progkorny.model.User;
 import com.example.progkorny.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 
 @Service
 public class ExpenseService {
@@ -80,4 +81,15 @@ public class ExpenseService {
     public void deleteExpense(final Long id) {
         expenseRepo.deleteById(id);
     }
+
+    /**
+     * Retrieves all expenses for a specific user.
+     *
+     * @param user the user whose expenses to retrieve
+     * @return a list of expenses for the specified user
+     */
+    public List<Expense> getExpensesByUser(final User user) {
+        return expenseRepo.findByUser(user);
+    }
+
 }

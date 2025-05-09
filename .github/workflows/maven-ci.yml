@@ -1,4 +1,4 @@
-name: CI/CD pipeline for Maven project
+name: CI pipeline
 
 on:
   push:
