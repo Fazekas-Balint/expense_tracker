@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,5 +101,34 @@ class ExpenseServiceTest {
 
         // THEN
         verify(expenseRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    void testGetExpensesByUser() {
+        // Arrange
+        User user = new User();
+        user.setId(1L);
+        user.setName("Teszt Elek");
+
+        Expense expense1 = new Expense();
+        expense1.setId(101L);
+        expense1.setUser(user);
+
+        Expense expense2 = new Expense();
+        expense2.setId(102L);
+        expense2.setUser(user);
+
+        List<Expense> expectedExpenses = Arrays.asList(expense1, expense2);
+
+        when(expenseRepository.findByUser(user)).thenReturn(expectedExpenses);
+
+        // Act
+        List<Expense> result = expenseService.getExpensesByUser(user);
+
+        // Assert
+        assertEquals(2, result.size());
+        assertEquals(expectedExpenses, result);
+
+        verify(expenseRepository, times(1)).findByUser(user);
     }
 }
